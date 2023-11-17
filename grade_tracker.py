@@ -12,6 +12,7 @@ options = [
     "Exit"
 ]
 
+
 def display_options():
     while True:
         for index, option in enumerate(options, start=1):
@@ -25,9 +26,12 @@ def display_options():
             view_student_grades()
         elif selected_option == 3:
             view_subject_averages()
+        elif selected_option == 4:
+            identify_top_performers()
         elif selected_option == 6:
             print("Goodbye!")
             break
+
 
 def add_student():
     student_name = input("Enter student name: ")
@@ -40,6 +44,7 @@ def add_student():
 
     return student_info
 
+
 def view_student_grades():
     if not students:
         print("No students to display.\n")
@@ -49,13 +54,9 @@ def view_student_grades():
             print(f"Subject: Math, Grade: ", student_info[1][0])
             print(f"Subject: English, Grade: ", student_info[1][1])
             print(f"Subject: Science, Grade: ", student_info[1][2])
-            print()
 
-def view_subject_averages():
-    if not students:
-        print("No students to calculate averages.")
-        return
-
+            
+def calculate_subject_averages():
     all_math_grades = []
     all_english_grades = []
     all_science_grades = []
@@ -78,6 +79,35 @@ def view_subject_averages():
         average_science = sum(all_science_grades) / count
         print("Average Science Grade: ", average_science)
     else:
+        print("No students to calculate averages.")   
+
+
+def view_subject_averages():
+    if not students:
         print("No students to calculate averages.")
-           
+        return
+    calculate_subject_averages()
+
+def identify_top_performers():
+    number_of_top_performer = input("Enter the number of top performer to show: ")
+    top_performers = []
+    highest_average_grade = 0
+
+    for student_info in students:
+        student_name = student_info[0]
+        average_grade = sum(student_info[1]) / len(student_info[1])
+
+        if average_grade > highest_average_grade:
+            top_performers = [student_name]
+            highest_average_grade = average_grade
+        elif average_grade == highest_average_grade:
+            top_performers.append(student_name)
+
+    if top_performers:
+        print("\nTop Performers:")
+        print(f"{rank}. {performer}: {highest_average_grade}")
+    else:
+        print("No top performers found.")
+    
+
 display_options()
