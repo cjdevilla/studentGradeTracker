@@ -1,7 +1,7 @@
 from array import array
 
 # Creating an array of integers
-students = []
+# students = []
 
 options = [
     "Add Student",
@@ -13,7 +13,12 @@ options = [
 ]
 
 
-def display_options():
+    
+
+def main():
+    students = array('u', [])
+    subjects = array("Math", "English" , "Science")
+    grades = array('u', [])
     while True:
         for index, option in enumerate(options, start=1):
             print(f"{index}. {option}")
@@ -21,9 +26,11 @@ def display_options():
         selected_option = int(input("Enter your choice: "))
 
         if selected_option == 1:
-            add_student()
+            student_name = input("Enter student name: ")
+            new_grades = [(subject, int(input(f"Enter {subject} grade: "))) for subject in subjects]
+            add_student(students, grades, student_name, new_grades)
         elif selected_option == 2:
-            view_student_grades()
+            view_student_grades(students, grades)
         elif selected_option == 3:
             view_subject_averages()
         elif selected_option == 4:
@@ -33,27 +40,35 @@ def display_options():
             break
 
 
-def add_student():
-    student_name = input("Enter student name: ")
-    math_grade = float(input(f"Enter {student_name}'s Math grade: "))
-    english_grade = float(input(f"Enter {student_name}'s English grade: "))
-    science_grade = float(input(f"Enter {student_name}'s Science grade: "))
 
-    student_info = (student_name, array('f', [math_grade, english_grade, science_grade]))
-    students.append(student_info) # "Joy" , [89.0, 90.0, 89.0]
+def add_student(students, grades, student_name, new_grades):
+    # student_name = input("Enter student name: ")
+    # math_grade = float(input(f"Enter {student_name}'s Math grade: "))
+    # english_grade = float(input(f"Enter {student_name}'s English grade: "))
+    # science_grade = float(input(f"Enter {student_name}'s Science grade: "))
 
-    return student_info
+    # student_info = (student_name, array('f', [math_grade, english_grade, science_grade]))
+    students.append(student_name) # "Joy" , [89.0, 90.0, 89.0]
+    grades.append(new_grades)
 
 
-def view_student_grades():
-    if not students:
-        print("No students to display.\n")
-    else:
-        for student_info in students:
-            print("Student:", student_info[0])
-            print(f"Subject: Math, Grade: ", student_info[1][0])
-            print(f"Subject: English, Grade: ", student_info[1][1])
-            print(f"Subject: Science, Grade: ", student_info[1][2])
+
+    # return student_info
+
+
+def view_student_grades(students, grades):
+    for index, student in enumerate(students, start=1):
+        print(f"{index}. {student}")
+        for i, grade in enumerate(grades, start=1):
+            print(f"Subject: {grade[0]}, Grade: {grade[1]}")
+    # if not students:
+    #     print("No students to display.\n")
+    # else:
+    #     for student_info in students:
+    #         print("Student:", student_info[0])
+    #         print(f"Subject: Math, Grade: ", student_info[1][0])
+    #         print(f"Subject: English, Grade: ", student_info[1][1])
+    #         print(f"Subject: Science, Grade: ", student_info[1][2])
 
             
 def calculate_subject_averages():
@@ -110,4 +125,5 @@ def identify_top_performers():
         print("No top performers found.")
     
 
-display_options()
+# display_options()
+main()
