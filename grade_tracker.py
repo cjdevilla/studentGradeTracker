@@ -108,6 +108,9 @@ def identify_top_performers():
         print(f"{rank}. {performer}: {highest_average_grade}")
     else:
         print("No top performers found.")
+
+def update_grade():
+    print("Updated grades: ")
     
 
 display_options()
