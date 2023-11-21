@@ -33,6 +33,7 @@ def main():
         elif selected_option == 2:
             view_student_grades(students, grades)
         elif selected_option == 3:
+            subject_averages = view_subject_averages(subject_averages)
             view_subject_averages(students ,grades, new_grades)
         elif selected_option == 4:
             identify_top_performers()
@@ -57,7 +58,8 @@ def add_student(students, grades, student_name, new_grades):
 def view_student_grades(students, grades):
     for index, student in enumerate(students, start=1):
         print(f"{index}. {student}")
-        for i, grade in enumerate(grades, start=1):
+        student_grades = grades[index -1]
+        for grade in student_grades:
             print(f"Subject: {grade[0]}, Grade: {grade[1]}")
     # if not students:
     #     print("No students to display.\n")
@@ -95,36 +97,19 @@ def view_student_grades(students, grades):
 #         print("No students to calculate averages.")   
 
 
-def view_subject_averages(students, grades, new_grades):
-    all_math_grades = []
-    all_english_grades = []
-    all_science_grades = []
+def calculate_subject_averages (grades, subjects):
+    subject_averages = []
+    for subject in subjects:
+        subject_grades = [grade[1] for student_grades in grades for grade in student_grades if grade[0] == subject]
+        subject_average = sum (subject_grades) / len(subject_grades) if subject_grades else 0
+        subject_averages. append ((subject, subject_average))
+    
+    return subject_averages
 
-    count = 0
-
-    if not students:
-        print("No students to calculate averages.")
-        return
-
-    for new_grade in new_grades:
-        math_individual_grade = new_grade[1] if new_grade[0] == "Math" else 0
-        english_individual_grade = new_grade[1] if new_grade[0] == "English" else 0
-        science_individual_grade = new_grade[1] if new_grade[0] == "Science" else 0
-        count += 1
-        all_math_grades.append(math_individual_grade)
-        all_english_grades.append(english_individual_grade)
-        all_science_grades.append(science_individual_grade)
-
-    count = len(students)
-    if count > 0:
-        average_math = sum(all_math_grades) / count
-        print("Average Math Grade: ", average_math)
-        average_english = sum(all_english_grades) / count
-        print("Average English Grade: ", average_english)
-        average_science = sum(all_science_grades) / count
-        print("Average Science Grade: ", average_science)
-    else:
-        print("No students to calculate averages.")
+def view_subject_averages (subjects, subject _averages):
+    print ("Subject Averages:") 
+    for index, subject_data in enumerate(subject _averages):
+    print(f"Subject: {subject_data[0]}, Average: {subject_data[1]}")
 
 
 def identify_top_performers():
